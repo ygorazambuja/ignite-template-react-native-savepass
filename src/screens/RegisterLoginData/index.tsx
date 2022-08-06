@@ -59,10 +59,13 @@ export function RegisterLoginData() {
     const dataKey = "@savepass:logins";
 
     const data = await AsyncStorage.getItem(dataKey);
+    const parsedData = data ? JSON.parse(data) : [];
     if (data) {
+      const updatedData = [...parsedData, newLoginData];
+      const stringfyData = JSON.stringify(updatedData);
       await AsyncStorage.setItem(
         dataKey,
-        JSON.stringify([...data, newLoginData])
+        stringfyData
       );
     } else {
       await AsyncStorage.setItem(dataKey, JSON.stringify([newLoginData]));
